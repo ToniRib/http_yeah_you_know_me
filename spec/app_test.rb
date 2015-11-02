@@ -19,7 +19,7 @@ class AppTest < Minitest::Test
     assert_equal expected, @app.hello_world(1)
   end
 
-  def test_generates_html_from_request
+  def test_generates_diagnostic_html_from_request
     request = ["GET / HTTP/1.1",
                "Host: 127.0.0.1:9292",
                "Connection:keep-alive",
@@ -40,11 +40,11 @@ class AppTest < Minitest::Test
 
     expected = "<pre>\n#{request_data.join("\n")}\n</pre>"
 
-    assert_equal expected, @app.convert_request_to_html(request)
+    assert_equal expected, @app.generate_response(0, request)
   end
 
   def test_generates_hello_world_response_with_diagnostics
-    request = ["GET / HTTP/1.1",
+    request = ["GET /hello HTTP/1.1",
                "Host: 127.0.0.1:9292",
                "Connection:keep-alive",
                "Cache-Control: max-age=0",
@@ -55,7 +55,7 @@ class AppTest < Minitest::Test
                "Accept-Language: en-US,en;q=0.8"]
 
     request_data = ["Verb: GET",
-                    "Path: /",
+                    "Path: /hello",
                     "Protocol: HTTP/1.1",
                     "Host: 127.0.0.1",
                     "Port: 9292",

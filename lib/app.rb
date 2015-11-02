@@ -17,7 +17,12 @@ class App
   end
 
   def generate_response(i, request)
-    hello_world(i) + "\n" + convert_request_to_html(request)
+    case path(request)
+    when '/'
+      convert_request_to_html(request)
+    when '/hello'
+      hello_world(i) + "\n" + convert_request_to_html(request)
+    end
   end
 
   def verb(request)
