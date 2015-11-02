@@ -9,7 +9,6 @@ class ClientHandler
     @server = TCPServer.open(port)
   end
 
-
   def get_request
     @client = server.accept
 
