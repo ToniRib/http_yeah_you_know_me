@@ -9,7 +9,7 @@ class ServerTest < Minitest::Test
     assert server.is_a?(TCPServer)
   end
 
-  def test_server_can_create_a_html_response
+  def test_can_create_a_html_response
     server = Server.new(9292)
 
     response = "<pre>Hello, World! (0)</pre>"
