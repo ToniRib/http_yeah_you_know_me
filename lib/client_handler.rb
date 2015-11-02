@@ -1,4 +1,5 @@
 require 'socket'
+require_relative 'app'
 require 'pry'
 
 class ClientHandler
@@ -24,21 +25,4 @@ class ClientHandler
     client.puts response
     client.close
   end
-end
-
-class App
-  def generate_response(i)
-    "Hello, World (#{i})"
-  end
-end
-
-ch = ClientHandler.new
-app = App.new
-i = 0
-
-loop do
-  request = ch.get_request
-  response = app.generate_response(i)
-  ch.post_response(response)
-  i += 1 if request.first.include?("favicon")
 end
