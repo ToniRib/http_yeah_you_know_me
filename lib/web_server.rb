@@ -7,7 +7,7 @@ i = 0
 
 loop do
   request = client_handler.get_request
-  response = app.hello_world(i)
+  response = app.generate_response(i, request)
   client_handler.post_response(response)
   i += 1 unless request.first.include?("favicon")
 end

@@ -10,7 +10,7 @@ class App
     data = ["Verb: #{verb}", "Path: #{path}", "Protocol: #{protocol}",
      "Host: #{host}", "Port: #{port}", "Origin: #{host}",
      accept]
-    "<pre>#{data.join("\n")}</pre>"
+    "<pre>\n#{data.join("\n")}\n</pre>"
   end
 
   def generate_response(i, request)

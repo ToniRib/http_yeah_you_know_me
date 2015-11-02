@@ -38,7 +38,7 @@ class AppTest < Minitest::Test
                     "Origin: 127.0.0.1",
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
 
-    expected = "<pre>#{request_data.join("\n")}</pre>"
+    expected = "<pre>\n#{request_data.join("\n")}\n</pre>"
 
     assert_equal expected, @app.convert_request_to_html(request)
   end
@@ -62,7 +62,7 @@ class AppTest < Minitest::Test
                     "Origin: 127.0.0.1",
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
 
-    expected = "Hello, World (0)\n<pre>#{request_data.join("\n")}</pre>"
+    expected = "Hello, World (0)\n<pre>\n#{request_data.join("\n")}\n</pre>"
 
     assert_equal expected, @app.generate_response(0, request)
   end
