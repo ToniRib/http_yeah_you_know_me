@@ -20,20 +20,25 @@ class ClientHandler
     request_lines
   end
 
-  def post_response(i)
-    client.puts "Hello, World! (#{i})"
+  def post_response(response)
+    client.puts response
     client.close
   end
 end
 
+class App
+  def generate_response(i)
+    "Hello, World (#{i})"
+  end
+end
+
 ch = ClientHandler.new
-# machine = Machine.new
+app = App.new
 i = 0
 
 loop do
   request = ch.get_request
-  # puts request
-  # response = ch.machine.generate_response(request)
-  ch.post_response(i)
+  response = app.generate_response(i)
+  ch.post_response(response)
   i += 1 if request.first.include?("favicon")
 end
