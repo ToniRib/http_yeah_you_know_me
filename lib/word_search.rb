@@ -7,14 +7,6 @@ class WordSearch
     @complete_me.populate(dictionary)
   end
 
-  def response(word)
-    if word?(word)
-      "#{word} is a known word"
-    else
-      "#{word} is not a known word"
-    end
-  end
-
   def word?(word)
     begin
       @complete_me.center.search(word).valid_word

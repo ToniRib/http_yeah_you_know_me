@@ -1,6 +1,7 @@
 require_relative 'html_generator'
 require_relative 'request_parser'
 require_relative 'word_search'
+require_relative 'responses'
 require 'pry'
 
 class App
@@ -8,6 +9,7 @@ class App
     @html_generator = HtmlGenerator.new
     @parser = RequestParser.new
     @word_search = WordSearch.new
+    @responses = Responses.new
   end
 
   def generate_response(i, request)
@@ -22,38 +24,17 @@ class App
 
   def post_responses(i, request)
     case @parser.path(request)
-    when '/start_game' then good_luck
+    when '/start_game' then @responses.good_luck
     end
   end
 
   def get_responses(i, request)
     case @parser.path(request)
-    when '/'            then root
-    when '/hello'       then hello_world(i)
-    when '/datetime'    then datetime
-    when '/shutdown'    then shutdown(i)
-    when '/word_search' then @word_search.response(@parser.word(request))
+    when '/'            then @responses.root
+    when '/hello'       then @responses.hello_world(i)
+    when '/datetime'    then @responses.datetime
+    when '/shutdown'    then @responses.shutdown(i)
+    when '/word_search' then @responses.word_search(@parser.word(request))
     end
-  end
-
-  def hello_world(i)
-    "Hello, World (#{i})"
-  end
-
-  def good_luck
-    "Good luck!"
-  end
-
-  def root
-    ''
-  end
-
-  def shutdown(i)
-    "Total Requests: #{i}"
-  end
-
-  def datetime
-    # 11:07AM on Sunday, November 1, 2015
-    Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
   end
 end

@@ -7,18 +7,6 @@ class AppTest < Minitest::Test
     @app = App.new
   end
 
-  def test_generates_hello_world_zero_response
-    expected = "Hello, World (0)"
-
-    assert_equal expected, @app.hello_world(0)
-  end
-
-  def test_generates_hello_world_with_different_response
-    expected = "Hello, World (1)"
-
-    assert_equal expected, @app.hello_world(1)
-  end
-
   def test_generates_diagnostic_html_from_request
     request = ["GET / HTTP/1.1",
                "Host: 127.0.0.1:9292",
