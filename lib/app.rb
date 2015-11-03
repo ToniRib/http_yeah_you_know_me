@@ -29,7 +29,7 @@ class App
     end
   end
 
-  private 
+  private
 
   def datetime
     # 11:07AM on Sunday, November 1, 2015
