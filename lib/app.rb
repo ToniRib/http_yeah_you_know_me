@@ -29,7 +29,7 @@ class App
       response = post_responses(i, request)
     end
 
-    @html_generator.generate(response,create_diagnostics(request))
+    @html_generator.generate(response, create_diagnostics(request))
   end
 
   def good_luck
