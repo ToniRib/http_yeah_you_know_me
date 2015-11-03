@@ -4,8 +4,6 @@ require 'pry'
 require '../complete_me/lib/complete_me'
 
 class App
-  attr_reader :parser
-
   def initialize
     @complete_me = CompleteMe.new
     @html_generator = HtmlGenerator.new

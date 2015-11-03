@@ -1,3 +1,5 @@
+require 'pry'
+
 class RequestParser
   def verb(request)
     request.first.split[0]
@@ -8,7 +10,9 @@ class RequestParser
   end
 
   def word(request)
-    request.first.split[1].split("?")[1].split("=")[1]
+    if request[0].include?('?')
+      request.first.split[1].split("?")[1].split("=")[1]
+    end
   end
 
   def protocol(request)
