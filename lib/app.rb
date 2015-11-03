@@ -17,6 +17,7 @@ class App
   end
 
   def generate_response(i, request)
+    # binding.pry
     case path(request)
     when '/'
       convert_request_to_html(request)
@@ -29,8 +30,6 @@ class App
     end
   end
 
-  private
-
   def datetime
     # 11:07AM on Sunday, November 1, 2015
     Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
@@ -41,7 +40,11 @@ class App
   end
 
   def path(request)
-    request.first.split[1]
+    request.first.split[1].split("?")[0]
+  end
+
+  def word(request)
+    request.first.split[1].split("?")[1].split("=")[1]
   end
 
   def protocol(request)

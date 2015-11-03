@@ -116,4 +116,17 @@ class AppTest < Minitest::Test
 
     assert_equal expected, @app.generate_response(5, request)
   end
+
+  def test_split_path_and_rest_of_url
+    request = ["GET /hello?bob"]
+
+    assert_equal "/hello", @app.path(request)
+  end
+
+  def test_it_take_a_parameter
+    request = ["GET /hello?word=value"]
+
+    assert_equal 'value', @app.word(request)
+  end
+
 end
