@@ -25,6 +25,21 @@ class App
 
   def generate_response(i, request)
     # binding.pry
+    if verb(request) == 'GET'
+      get_responses(i, request)
+    else
+      post_responses(i, request)
+    end
+  end
+
+  def post_responses(i, request)
+    case path(request)
+    when '/start_game'
+      "Good luck!" + "\n" + convert_request_to_html(request)
+    end
+  end
+
+  def get_responses(i, request)
     case path(request)
     when '/'
       convert_request_to_html(request)
