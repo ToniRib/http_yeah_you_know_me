@@ -22,7 +22,14 @@ class App
       convert_request_to_html(request)
     when '/hello'
       hello_world(i) + "\n" + convert_request_to_html(request)
+    when '/datetime'
+      datetime + "\n" + convert_request_to_html(request)
     end
+  end
+
+  def datetime
+    # 11:07AM on Sunday, November 1, 2015
+    Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
   end
 
   def verb(request)
