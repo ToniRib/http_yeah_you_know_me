@@ -37,18 +37,21 @@ class App
     end
   end
 
+  def root
+    ''
+  end
+
+  def shutdown(i)
+    "Total Requests: #{i}"
+  end
+
   def get_responses(i, request)
     case path(request)
-    when '/'
-      ''
-    when '/hello'
-      hello_world(i)
-    when '/datetime'
-      datetime
-    when '/shutdown'
-      "Total Requests: #{i}"
-    when '/word_search'
-      word_response(word(request))
+    when '/'            then root
+    when '/hello'       then hello_world(i)
+    when '/datetime'    then datetime
+    when '/shutdown'    then shutdown(i)
+    when '/word_search' then word_response(word(request))
     end
   end
 
