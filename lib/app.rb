@@ -34,6 +34,8 @@ class App
       datetime + "\n" + convert_request_to_html(request)
     when '/shutdown'
       "Total Requests: #{i}" + "\n" + convert_request_to_html(request)
+    when '/word_search'
+      word_response(word(request)) + "\n" + convert_request_to_html(request)
     end
   end
 
