@@ -9,15 +9,13 @@ i = 0
 
 loop do
   request = client_handler.get_request
-  
+
   unless request.first.include?("favicon")
     response = app.generate_response(i, request)
     headers = header_generator.headers(response.length)
     client_handler.post_response(headers, response)
 
-    if !response.nil? && response.include?("Total Requests:")
-      break
-    end
+    break if !response.nil? && response.include?("Total Requests:")
 
     i += 1
   end
