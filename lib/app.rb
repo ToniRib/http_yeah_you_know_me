@@ -10,10 +10,6 @@ class App
     @word_search = WordSearch.new
   end
 
-  def hello_world(i)
-    "Hello, World (#{i})"
-  end
-
   def generate_response(i, request)
     if @parser.verb(request) == 'GET'
       response = get_responses(i, request)
@@ -22,18 +18,6 @@ class App
     end
 
     @html_generator.generate(response, @parser.diagnostics(request))
-  end
-
-  def good_luck
-    "Good luck!"
-  end
-
-  def root
-    ''
-  end
-
-  def shutdown(i)
-    "Total Requests: #{i}"
   end
 
   def post_responses(i, request)
@@ -50,6 +34,22 @@ class App
     when '/shutdown'    then shutdown(i)
     when '/word_search' then @word_search.word_response(@parser.word(request))
     end
+  end
+
+  def hello_world(i)
+    "Hello, World (#{i})"
+  end
+
+  def good_luck
+    "Good luck!"
+  end
+
+  def root
+    ''
+  end
+
+  def shutdown(i)
+    "Total Requests: #{i}"
   end
 
   def datetime
