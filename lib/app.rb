@@ -14,50 +14,41 @@ class App
     "Hello, World (#{i})"
   end
 
-  def convert_request_to_html(request)
-    data = ["Verb: #{verb(request)}", "Path: #{path(request)}",
-            "Protocol: #{protocol(request)}", "Host: #{host(request)}",
-            "Port: #{port(request)}", "Origin: #{host(request)}", "#{accept(request)}"]
-    create_html_string(data)
-  end
-
   def create_diagnostics(request)
     ["Verb: #{verb(request)}", "Path: #{path(request)}",
       "Protocol: #{protocol(request)}", "Host: #{host(request)}",
       "Port: #{port(request)}", "Origin: #{host(request)}", "#{accept(request)}"].join("\n")
   end
 
-  def create_html_string(data)
-    "<pre>\n#{data.join("\n")}\n</pre>"
-  end
-
   def generate_response(i, request)
     if verb(request) == 'GET'
-      get_responses(i, request)
+      response = get_responses(i, request)
     else
-      post_responses(i, request)
+      response = post_responses(i, request)
     end
+
+    @html_generator.generate(response,create_diagnostics(request))
   end
 
   def post_responses(i, request)
     case path(request)
     when '/start_game'
-      @html_generator.generate("Good luck!", create_diagnostics(request))
+      "Good luck!"
     end
   end
 
   def get_responses(i, request)
     case path(request)
     when '/'
-      @html_generator.generate('', create_diagnostics(request))
+      ''
     when '/hello'
-      @html_generator.generate(hello_world(i), create_diagnostics(request))
+      hello_world(i)
     when '/datetime'
-      @html_generator.generate(datetime, create_diagnostics(request))
+      datetime
     when '/shutdown'
-      @html_generator.generate("Total Requests: #{i}", create_diagnostics(request))
+      "Total Requests: #{i}"
     when '/word_search'
-      @html_generator.generate(word_response(word(request)), create_diagnostics(request))
+      word_response(word(request))
     end
   end
 
