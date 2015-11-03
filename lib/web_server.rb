@@ -1,20 +1,26 @@
 require_relative 'app'
 require_relative 'client_handler'
+require_relative 'header_generator'
 
 client_handler = ClientHandler.new
 app = App.new
+header_generator = HeaderGenerator.new
 i = 0
 
 loop do
   request = client_handler.get_request
-  response = app.generate_response(i, request)
-  client_handler.post_response(response)
+  
+  unless request.first.include?("favicon")
+    response = app.generate_response(i, request)
+    headers = header_generator.headers(response.length)
+    client_handler.post_response(headers, response)
 
-  if !response.nil? && response.include?("Total Requests:")
-    break
+    if !response.nil? && response.include?("Total Requests:")
+      break
+    end
+
+    i += 1
   end
-
-  i += 1 unless request.first.include?("favicon")
 end
 
 puts "Shutting down"

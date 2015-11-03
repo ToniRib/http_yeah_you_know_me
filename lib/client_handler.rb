@@ -20,7 +20,9 @@ class ClientHandler
     request_lines
   end
 
-  def post_response(response)
+  def post_response(headers, response)
+    # binding.pry
+    client.puts headers
     client.puts response
     client.close
   end

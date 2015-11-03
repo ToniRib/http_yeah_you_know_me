@@ -24,7 +24,6 @@ class App
   end
 
   def generate_response(i, request)
-    # binding.pry
     if verb(request) == 'GET'
       get_responses(i, request)
     else
