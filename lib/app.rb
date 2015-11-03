@@ -24,6 +24,8 @@ class App
       hello_world(i) + "\n" + convert_request_to_html(request)
     when '/datetime'
       datetime + "\n" + convert_request_to_html(request)
+    when '/shutdown'
+      "Total Requests: #{i}" + "\n" + convert_request_to_html(request)
     end
   end
 

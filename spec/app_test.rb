@@ -85,10 +85,35 @@ class AppTest < Minitest::Test
                     "Port: 9292",
                     "Origin: 127.0.0.1",
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
+
     date_time = Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
 
     expected = "#{date_time}\n<pre>\n#{request_data.join("\n")}\n</pre>"
 
     assert_equal expected, @app.generate_response(0, request)
+  end
+
+  def test_generates_shutdown_response_with_diagnostics
+    request = ["GET /shutdown HTTP/1.1",
+               "Host: 127.0.0.1:9292",
+               "Connection:keep-alive",
+               "Cache-Control: max-age=0",
+               "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+               "Upgrade-Insecure-Requests: 1",
+               "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
+               "Accept-Encoding: gzip, deflate, sdch",
+               "Accept-Language: en-US,en;q=0.8"]
+
+    request_data = ["Verb: GET",
+                    "Path: /shutdown",
+                    "Protocol: HTTP/1.1",
+                    "Host: 127.0.0.1",
+                    "Port: 9292",
+                    "Origin: 127.0.0.1",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
+
+    expected = "Total Requests: 5\n<pre>\n#{request_data.join("\n")}\n</pre>"
+
+    assert_equal expected, @app.generate_response(5, request)
   end
 end
