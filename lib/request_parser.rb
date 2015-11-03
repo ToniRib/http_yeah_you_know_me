@@ -30,4 +30,10 @@ class RequestParser
   def accept(request)
     request[4]
   end
+
+  def diagnostics(request)
+    ["Verb: #{verb(request)}", "Path: #{path(request)}",
+      "Protocol: #{protocol(request)}", "Host: #{host(request)}",
+      "Port: #{port(request)}", "Origin: #{host(request)}", "#{accept(request)}"].join("\n")
+  end
 end

@@ -1,6 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/html_generator'
+require 'minitest'
+require 'html_generator'
 
 class HtmlGeneratorTest < Minitest::Test
   def test_it_wraps_response_in_a_paragraph

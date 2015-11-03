@@ -1,6 +1,5 @@
-require 'minitest/autorun'
-require 'minitest/pride'
-require './lib/request_parser'
+require 'minitest'
+require 'request_parser'
 
 class RequestParserTest < Minitest::Test
   def setup
@@ -19,7 +18,7 @@ class RequestParserTest < Minitest::Test
                "Host: 127.0.55.1:2323",
                "Connection:keep-alive",
                "Cache-Control: max-age=0",
-               "Accept: application/json,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+               "Accept: application/json,text/html,application/xhtml+xml,application/xml;q=0.9",
                "Upgrade-Insecure-Requests: 1",
                "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
                "Accept-Encoding: gzip, deflate, sdch",
@@ -86,7 +85,31 @@ class RequestParserTest < Minitest::Test
   end
 
   def test_recognizes_a_different_accept
-    expected = "Accept: application/json,text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+    expected = "Accept: application/json,text/html,application/xhtml+xml,application/xml;q=0.9"
     assert_equal expected, @parser.accept(@request2)
+  end
+
+  def test_creates_string_of_diagnostics
+    expected = ["Verb: GET",
+                "Path: /shutdown",
+                "Protocol: HTTP/1.1",
+                "Host: 127.0.0.1",
+                "Port: 9292",
+                "Origin: 127.0.0.1",
+                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"].join("\n")
+
+    assert_equal expected, @parser.diagnostics(@request1)
+  end
+
+  def test_creates_other_string_of_diagnostics
+    expected = ["Verb: POST",
+                "Path: /word_search",
+                "Protocol: HTTP/2.0",
+                "Host: 127.0.55.1",
+                "Port: 2323",
+                "Origin: 127.0.55.1",
+                "Accept: application/json,text/html,application/xhtml+xml,application/xml;q=0.9"].join("\n")
+
+    assert_equal expected, @parser.diagnostics(@request2)
   end
 end
