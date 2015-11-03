@@ -129,4 +129,33 @@ class AppTest < Minitest::Test
     assert_equal 'value', @app.word(request)
   end
 
+  def test_pizza_is_a_word
+    assert @app.word?("pizza")
+  end
+
+  def test_pizz_is_not_a_word
+    refute @app.word?("pizz")
+  end
+
+  def test_random_chars_is_not_a_word
+    refute @app.word?("kasjlgisaejglsaknglasehg")
+  end
+
+  def test_responds_with_known_word_if_word_is_pizza
+    expected = "pizza is a known word"
+
+    assert_equal expected, @app.word_response('pizza')
+  end
+
+  def test_responds_with_unknown_word_if_word_is_pizz
+    expected = "pizz is not a known word"
+
+    assert_equal expected, @app.word_response('pizz')
+  end
+
+  def test_responds_with_unknown_word_if_word_is_random_chars
+    expected = "jfesaiovewuoa is not a known word"
+
+    assert_equal expected, @app.word_response('jfesaiovewuoa')
+  end
 end

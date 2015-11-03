@@ -1,6 +1,13 @@
 require 'pry'
+require '../complete_me/lib/complete_me'
 
 class App
+  def initialize
+    @complete_me = CompleteMe.new
+    dictionary = ['pizza']
+    @complete_me.populate(dictionary)
+  end
+
   def hello_world(i)
     "Hello, World (#{i})"
   end
@@ -35,6 +42,14 @@ class App
     Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
   end
 
+  def word_response(word)
+    if word?(word)
+      "#{word} is a known word"
+    else
+      "#{word} is not a known word"
+    end
+  end
+
   def verb(request)
     request.first.split[0]
   end
@@ -45,6 +60,14 @@ class App
 
   def word(request)
     request.first.split[1].split("?")[1].split("=")[1]
+  end
+
+  def word?(word)
+    begin
+      @complete_me.center.search(word).valid_word
+    rescue
+      false
+    end
   end
 
   def protocol(request)
