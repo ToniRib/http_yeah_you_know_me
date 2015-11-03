@@ -29,6 +29,8 @@ class App
     end
   end
 
+  private 
+
   def datetime
     # 11:07AM on Sunday, November 1, 2015
     Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
