@@ -1,11 +1,15 @@
 require_relative 'html_generator'
+require_relative 'request_parser'
 require 'pry'
 require '../complete_me/lib/complete_me'
 
 class App
+  attr_reader :parser
+
   def initialize
     @complete_me = CompleteMe.new
     @html_generator = HtmlGenerator.new
+    @parser = RequestParser.new
     dictionary = ['pizza']
     @complete_me.populate(dictionary)
   end
@@ -15,13 +19,13 @@ class App
   end
 
   def create_diagnostics(request)
-    ["Verb: #{verb(request)}", "Path: #{path(request)}",
-      "Protocol: #{protocol(request)}", "Host: #{host(request)}",
-      "Port: #{port(request)}", "Origin: #{host(request)}", "#{accept(request)}"].join("\n")
+    ["Verb: #{@parser.verb(request)}", "Path: #{@parser.path(request)}",
+      "Protocol: #{@parser.protocol(request)}", "Host: #{@parser.host(request)}",
+      "Port: #{@parser.port(request)}", "Origin: #{@parser.host(request)}", "#{@parser.accept(request)}"].join("\n")
   end
 
   def generate_response(i, request)
-    if verb(request) == 'GET'
+    if @parser.verb(request) == 'GET'
       response = get_responses(i, request)
     else
       response = post_responses(i, request)
@@ -30,11 +34,8 @@ class App
     @html_generator.generate(response,create_diagnostics(request))
   end
 
-  def post_responses(i, request)
-    case path(request)
-    when '/start_game'
-      "Good luck!"
-    end
+  def good_luck
+    "Good luck!"
   end
 
   def root
@@ -45,13 +46,19 @@ class App
     "Total Requests: #{i}"
   end
 
+  def post_responses(i, request)
+    case @parser.path(request)
+    when '/start_game' then good_luck
+    end
+  end
+
   def get_responses(i, request)
-    case path(request)
+    case @parser.path(request)
     when '/'            then root
     when '/hello'       then hello_world(i)
     when '/datetime'    then datetime
     when '/shutdown'    then shutdown(i)
-    when '/word_search' then word_response(word(request))
+    when '/word_search' then word_response(@parser.word(request))
     end
   end
 
@@ -68,39 +75,11 @@ class App
     end
   end
 
-  def verb(request)
-    request.first.split[0]
-  end
-
-  def path(request)
-    request.first.split[1].split("?")[0]
-  end
-
-  def word(request)
-    request.first.split[1].split("?")[1].split("=")[1]
-  end
-
   def word?(word)
     begin
       @complete_me.center.search(word).valid_word
     rescue
       false
     end
-  end
-
-  def protocol(request)
-    request.first.split[2]
-  end
-
-  def host(request)
-    request[1].split[1].split(":")[0]
-  end
-
-  def port(request)
-    request[1].split[1].split(":")[1]
-  end
-
-  def accept(request)
-    request[4]
   end
 end

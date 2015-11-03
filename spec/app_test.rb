@@ -121,13 +121,13 @@ class AppTest < Minitest::Test
   def test_split_path_and_rest_of_url
     request = ["GET /hello?bob"]
 
-    assert_equal "/hello", @app.path(request)
+    assert_equal "/hello", @app.parser.path(request)
   end
 
   def test_it_take_a_parameter
     request = ["GET /hello?word=value"]
 
-    assert_equal 'value', @app.word(request)
+    assert_equal 'value', @app.parser.word(request)
   end
 
   def test_pizza_is_a_word
