@@ -25,6 +25,6 @@ class HtmlGeneratorTest < Minitest::Test
     diagnostics = 'Peter'
     expected = "<html><head></head><body><p>Banana</p><pre>Peter</pre></body></html>"
 
-    assert_equal expected, generator.generate_html(response, diagnostics)
+    assert_equal expected, generator.generate(response, diagnostics)
   end
 end

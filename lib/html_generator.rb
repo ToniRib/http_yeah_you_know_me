@@ -7,7 +7,7 @@ class HtmlGenerator
     "<pre>#{text}</pre>"
   end
 
-  def generate_html(response, diagnostics)
+  def generate(response, diagnostics)
     "<html><head></head><body>#{wrap_response(response)}#{wrap_diagnostics(diagnostics)}</body></html>"
   end
 end

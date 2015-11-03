@@ -1,9 +1,11 @@
+require_relative 'html_generator'
 require 'pry'
 require '../complete_me/lib/complete_me'
 
 class App
   def initialize
     @complete_me = CompleteMe.new
+    @html_generator = HtmlGenerator.new
     dictionary = ['pizza']
     @complete_me.populate(dictionary)
   end
@@ -17,6 +19,12 @@ class App
             "Protocol: #{protocol(request)}", "Host: #{host(request)}",
             "Port: #{port(request)}", "Origin: #{host(request)}", "#{accept(request)}"]
     create_html_string(data)
+  end
+
+  def create_diagnostics(request)
+    ["Verb: #{verb(request)}", "Path: #{path(request)}",
+      "Protocol: #{protocol(request)}", "Host: #{host(request)}",
+      "Port: #{port(request)}", "Origin: #{host(request)}", "#{accept(request)}"].join("\n")
   end
 
   def create_html_string(data)
@@ -34,22 +42,22 @@ class App
   def post_responses(i, request)
     case path(request)
     when '/start_game'
-      "Good luck!" + "\n" + convert_request_to_html(request)
+      @html_generator.generate("Good luck!", create_diagnostics(request))
     end
   end
 
   def get_responses(i, request)
     case path(request)
     when '/'
-      convert_request_to_html(request)
+      @html_generator.generate('', create_diagnostics(request))
     when '/hello'
-      hello_world(i) + "\n" + convert_request_to_html(request)
+      @html_generator.generate(hello_world(i), create_diagnostics(request))
     when '/datetime'
-      datetime + "\n" + convert_request_to_html(request)
+      @html_generator.generate(datetime, create_diagnostics(request))
     when '/shutdown'
-      "Total Requests: #{i}" + "\n" + convert_request_to_html(request)
+      @html_generator.generate("Total Requests: #{i}", create_diagnostics(request))
     when '/word_search'
-      word_response(word(request)) + "\n" + convert_request_to_html(request)
+      @html_generator.generate(word_response(word(request)), create_diagnostics(request))
     end
   end
 
