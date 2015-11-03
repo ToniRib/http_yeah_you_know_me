@@ -32,7 +32,7 @@ class App
     when '/hello'       then hello_world(i)
     when '/datetime'    then datetime
     when '/shutdown'    then shutdown(i)
-    when '/word_search' then @word_search.word_response(@parser.word(request))
+    when '/word_search' then @word_search.response(@parser.word(request))
     end
   end
 

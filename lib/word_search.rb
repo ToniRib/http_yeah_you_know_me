@@ -7,7 +7,7 @@ class WordSearch
     @complete_me.populate(dictionary)
   end
 
-  def word_response(word)
+  def response(word)
     if word?(word)
       "#{word} is a known word"
     else

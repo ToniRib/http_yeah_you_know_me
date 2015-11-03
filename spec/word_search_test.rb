@@ -21,18 +21,18 @@ class WordSearchTest < Minitest::Test
   def test_responds_with_known_word_if_word_is_pizza
     expected = "pizza is a known word"
 
-    assert_equal expected, @word_search.word_response('pizza')
+    assert_equal expected, @word_search.response('pizza')
   end
 
   def test_responds_with_unknown_word_if_word_is_pizz
     expected = "pizz is not a known word"
 
-    assert_equal expected, @word_search.word_response('pizz')
+    assert_equal expected, @word_search.response('pizz')
   end
 
   def test_responds_with_unknown_word_if_word_is_random_chars
     expected = "jfesaiovewuoa is not a known word"
 
-    assert_equal expected, @word_search.word_response('jfesaiovewuoa')
+    assert_equal expected, @word_search.response('jfesaiovewuoa')
   end
 end
