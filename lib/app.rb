@@ -10,10 +10,10 @@ class App
     @html_generator = HtmlGenerator.new
     @responses = Responses.new
     @header_generator = HeaderGenerator.new
-    @status_code = '200 OK'
   end
 
   def generate_response(i, request)
+    @status_code = '200 OK'
     @parser = RequestParser.new(request)
     if @parser.verb == 'GET'
       response = get_responses(i)
@@ -21,6 +21,7 @@ class App
       response = post_responses
     end
 
+    puts @status_code
     @html_generator.generate(response, @parser.diagnostics)
   end
 
@@ -32,7 +33,11 @@ class App
       @responses.good_luck
     when '/game'
       @game.store_guess(@parser.word.to_i)
-      @responses.game(@game.check_guess, @game.number_of_guesses)
+      @status_code = '301 MOVED PERMANENTLY'
+      ''
+      # set our response to be ''
+      # set the header to be 301 moved permanently
+      # @responses.game(@game.check_guess, @game.number_of_guesses)
     end
   end
 
@@ -49,6 +54,7 @@ class App
   end
 
   def generate_headers(length)
+    # binding.pry
     @header_generator.headers(length, @status_code)
   end
 end
