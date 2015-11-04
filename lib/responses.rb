@@ -29,4 +29,18 @@ class Responses
       "#{word} is not a known word"
     end
   end
+
+  def game(sym, num_guesses)
+    case sym
+    when :too_low
+      line = "Your guess was too low!"
+    when :correct
+      line = "Your guess was correct!"
+    when :too_high
+      line = "Your guess was too high!"
+    else
+      line = ''
+    end
+    line + "\n" + "Number of Guesses: #{num_guesses}"
+  end
 end

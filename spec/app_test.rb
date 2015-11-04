@@ -26,7 +26,7 @@ class AppTest < Minitest::Test
                     "Origin: 127.0.0.1",
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
 
-    expected = "<html><head></head><body><p></p><pre>#{request_data.join("\n")}</pre></body></html>"
+    expected = "<html><head></head><body><pre></pre><pre>#{request_data.join("\n")}</pre></body></html>"
 
     assert_equal expected, @app.generate_response(0, request)
   end
@@ -50,7 +50,7 @@ class AppTest < Minitest::Test
                     "Origin: 127.0.0.1",
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
 
-    expected = "<html><head></head><body><p>Hello, World (0)</p><pre>#{request_data.join("\n")}</pre></body></html>"
+    expected = "<html><head></head><body><pre>Hello, World (0)</pre><pre>#{request_data.join("\n")}</pre></body></html>"
 
     assert_equal expected, @app.generate_response(0, request)
   end
@@ -76,7 +76,7 @@ class AppTest < Minitest::Test
 
     date_time = Time.now.strftime('%l:%M%p on %A, %B %e, %Y')
 
-    expected = "<html><head></head><body><p>#{date_time}</p><pre>#{request_data.join("\n")}</pre></body></html>"
+    expected = "<html><head></head><body><pre>#{date_time}</pre><pre>#{request_data.join("\n")}</pre></body></html>"
 
     assert_equal expected, @app.generate_response(0, request)
   end
@@ -100,7 +100,7 @@ class AppTest < Minitest::Test
                     "Origin: 127.0.0.1",
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
 
-    expected = "<html><head></head><body><p>Total Requests: 5</p><pre>#{request_data.join("\n")}</pre></body></html>"
+    expected = "<html><head></head><body><pre>Total Requests: 5</pre><pre>#{request_data.join("\n")}</pre></body></html>"
 
     assert_equal expected, @app.generate_response(5, request)
   end
@@ -124,7 +124,7 @@ class AppTest < Minitest::Test
                     "Origin: 127.0.0.1",
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
 
-    expected = "<html><head></head><body><p>pizza is a known word</p><pre>#{request_data.join("\n")}</pre></body></html>"
+    expected = "<html><head></head><body><pre>pizza is a known word</pre><pre>#{request_data.join("\n")}</pre></body></html>"
 
     assert_equal expected, @app.generate_response(0, request)
   end
@@ -163,7 +163,7 @@ class AppTest < Minitest::Test
                     "Origin: 127.0.0.1",
                     "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
 
-    expected = "<html><head></head><body><p>Good luck!</p><pre>#{request_data.join("\n")}</pre></body></html>"
+    expected = "<html><head></head><body><pre>Good luck!</pre><pre>#{request_data.join("\n")}</pre></body></html>"
 
     assert_equal expected, @app.generate_response(0, request)
   end

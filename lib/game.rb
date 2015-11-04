@@ -6,9 +6,12 @@ class Game
     @guesses = []
   end
 
-  def guess(number)
+  def store_guess(number)
     @guesses << number
-    case number <=> answer
+  end
+
+  def check_guess
+    case @guesses.last <=> answer
     when -1 then  :too_low
     when 0  then  :correct
     when 1  then  :too_high

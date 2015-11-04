@@ -2,6 +2,7 @@ require_relative 'html_generator'
 require_relative 'request_parser'
 require_relative 'word_search'
 require_relative 'responses'
+require_relative 'game'
 require 'pry'
 
 class App
@@ -24,11 +25,11 @@ class App
   def post_responses
     case @parser.path
     when '/start_game'
+      @game = Game.new
       @responses.good_luck
-      #start game
     when '/game'
-      # check guess
-      # output response
+      @game.store_guess(@parser.word.to_i)
+      @responses.game(@game.check_guess, @game.number_of_guesses)
     end
   end
 
@@ -39,7 +40,7 @@ class App
     when '/datetime'    then @responses.datetime
     when '/shutdown'    then @responses.shutdown(i)
     when '/word_search' then @responses.word_search(@parser.word)
-    when '/game'        # game response here
+    when '/game'        then @responses.game(nil, @game.number_of_guesses)
     end
   end
 end

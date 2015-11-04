@@ -5,7 +5,7 @@ class HtmlGeneratorTest < Minitest::Test
   def test_it_wraps_response_in_a_paragraph
     generator = HtmlGenerator.new
     response = 'Peter'
-    expected = "<p>Peter</p>"
+    expected = "<pre>Peter</pre>"
 
     assert_equal expected, generator.wrap_response(response)
   end
@@ -22,7 +22,7 @@ class HtmlGeneratorTest < Minitest::Test
     generator = HtmlGenerator.new
     response = 'Banana'
     diagnostics = 'Peter'
-    expected = "<html><head></head><body><p>Banana</p><pre>Peter</pre></body></html>"
+    expected = "<html><head></head><body><pre>Banana</pre><pre>Peter</pre></body></html>"
 
     assert_equal expected, generator.generate(response, diagnostics)
   end

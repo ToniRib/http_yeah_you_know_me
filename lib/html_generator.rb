@@ -1,6 +1,6 @@
 class HtmlGenerator
   def wrap_response(text)
-    "<p>#{text}</p>"
+    "<pre>#{text}</pre>"
   end
 
   def wrap_diagnostics(text)
