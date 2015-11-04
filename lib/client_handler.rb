@@ -17,6 +17,14 @@ class ClientHandler
       request_lines << line.chomp
     end
 
+    if request_lines.join.include?('Content-Type')
+      while line = client.gets and !line.chomp.empty?
+        request_lines << line.chomp
+      end
+
+      request_lines << client.gets
+    end
+
     request_lines
   end
 
