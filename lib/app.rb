@@ -39,8 +39,7 @@ class App
         @responses.good_luck
       end
     when '/game'
-      binding.pry
-      @game.store_guess(@parser.word.to_i)
+      @game.store_guess(@parser.guess)
       @status_code = '301 MOVED PERMANENTLY'
       @responses.root
     end

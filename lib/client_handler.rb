@@ -29,7 +29,6 @@ class ClientHandler
   end
 
   def post_response(headers, response)
-    # binding.pry
     client.puts headers
     client.puts response
     client.close

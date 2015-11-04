@@ -4,13 +4,17 @@ class RequestParser
   attr_reader :request
 
   def initialize(raw_request)
+    # p raw_request
     @request = {}
     build_hash(raw_request)
+    # puts @request
+    # binding.pry
   end
 
   def build_hash(raw_request)
     parse_first_line(raw_request.shift)
     parse_host(raw_request.shift)
+    parse_body(raw_request.pop(3)) if raw_request.length > 9
     parse_headers(raw_request)
   end
 
@@ -26,6 +30,10 @@ class RequestParser
     @request['Port'] = line.split[1].split(":")[1]
   end
 
+  def parse_body(body)
+    @request['Guess'] = body.last.chomp.to_i
+  end
+
   def parse_headers(array)
     array.each do |line|
       split_line = line.split
@@ -39,6 +47,10 @@ class RequestParser
 
   def path
     request['Path']
+  end
+
+  def guess
+    request['Guess']
   end
 
   def word
