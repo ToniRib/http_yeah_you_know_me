@@ -43,6 +43,8 @@ class Responses
         line = "Your guess was correct!"
       when :too_high
         line = "Your guess was too high!"
+      when :no_guesses
+        line = "Good Luck!"
       end
     else
       line = ''

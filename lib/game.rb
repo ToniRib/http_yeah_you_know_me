@@ -11,6 +11,7 @@ class Game
   end
 
   def check_guess
+    return :no_guesses if @guesses.empty?
     case @guesses.last <=> answer
     when -1 then  :too_low
     when 0  then  :correct
