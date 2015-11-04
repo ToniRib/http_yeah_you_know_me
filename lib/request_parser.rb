@@ -4,11 +4,8 @@ class RequestParser
   attr_reader :request
 
   def initialize(raw_request)
-    # p raw_request
     @request = {}
     build_hash(raw_request)
-    # puts @request
-    # binding.pry
   end
 
   def build_hash(raw_request)

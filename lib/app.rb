@@ -21,7 +21,6 @@ class App
       response = post_responses
     end
 
-    puts @status_code
     @html_generator.generate(response, @parser.diagnostics)
   end
 
@@ -29,11 +28,9 @@ class App
     case @parser.path
     when '/start_game'
       if @game
-        # game exists
         @status_code = '403 FORBIDDEN'
         @responses.game_in_progress
       else
-        # game does not exist
         @game = Game.new
         @status_code = '301 MOVED PERMANENTLY'
         @responses.good_luck
