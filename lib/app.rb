@@ -9,6 +9,7 @@ class App
   def initialize
     @html_generator = HtmlGenerator.new
     @responses = Responses.new
+    @header_generator = HeaderGenerator.new
   end
 
   def generate_response(i, request)
@@ -42,5 +43,9 @@ class App
     when '/word_search' then @responses.word_search(@parser.word)
     when '/game'        then @responses.game(nil, @game.number_of_guesses)
     end
+  end
+
+  def generate_headers(length)
+    @header_generator.headers(length, @parser.path, @parser.verb)
   end
 end
