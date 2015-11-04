@@ -7,34 +7,33 @@ require 'pry'
 class App
   def initialize
     @html_generator = HtmlGenerator.new
-    @parser = RequestParser.new
-    @word_search = WordSearch.new
     @responses = Responses.new
   end
 
   def generate_response(i, request)
-    if @parser.verb(request) == 'GET'
-      response = get_responses(i, request)
+    @parser = RequestParser.new(request)
+    if @parser.verb == 'GET'
+      response = get_responses(i)
     else
-      response = post_responses(i, request)
+      response = post_responses
     end
 
-    @html_generator.generate(response, @parser.diagnostics(request))
+    @html_generator.generate(response, @parser.diagnostics)
   end
 
-  def post_responses(i, request)
-    case @parser.path(request)
+  def post_responses
+    case @parser.path
     when '/start_game' then @responses.good_luck
     end
   end
 
-  def get_responses(i, request)
-    case @parser.path(request)
+  def get_responses(i)
+    case @parser.path
     when '/'            then @responses.root
     when '/hello'       then @responses.hello_world(i)
     when '/datetime'    then @responses.datetime
     when '/shutdown'    then @responses.shutdown(i)
-    when '/word_search' then @responses.word_search(@parser.word(request))
+    when '/word_search' then @responses.word_search(@parser.word)
     end
   end
 end

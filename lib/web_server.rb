@@ -9,6 +9,7 @@ i = 0
 
 loop do
   request = client_handler.get_request
+  puts request
 
   unless request.first.include?("favicon")
     response = app.generate_response(i, request)

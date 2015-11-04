@@ -1,40 +1,70 @@
 require 'pry'
 
 class RequestParser
-  def verb(request)
-    request.first.split[0]
+  attr_reader :request
+
+  def initialize(raw_request)
+    @request = {}
+    build_hash(raw_request)
   end
 
-  def path(request)
-    request.first.split[1].split("?")[0]
+  def build_hash(raw_request)
+    parse_first_line(raw_request.shift)
+    parse_host(raw_request.shift)
+    parse_headers(raw_request)
   end
 
-  def word(request)
-    if request[0].include?('?')
-      request.first.split[1].split("?")[1].split("=")[1]
+  def parse_first_line(line)
+    @request['Verb'] = line.split[0]
+    @request['Path'] = line.split[1].split("?")[0]
+    @request['Word'] = line.split[1].split("?")[1].split("=")[1] if line.include?('?')
+    @request['Protocol'] = line.split[2]
+  end
+
+  def parse_host(line)
+    @request['Host'] = line.split[1].split(":")[0]
+    @request['Port'] = line.split[1].split(":")[1]
+  end
+
+  def parse_headers(array)
+    array.each do |line|
+      split_line = line.split
+      @request[split_line[0].chop] = split_line[1]
     end
   end
 
-  def protocol(request)
-    request.first.split[2]
+  def verb
+    request['Verb']
   end
 
-  def host(request)
-    request[1].split[1].split(":")[0]
+  def path
+    request['Path']
   end
 
-  def port(request)
-    request[1].split[1].split(":")[1]
+  def word
+    request['Word']
   end
 
-  def accept(request)
-    request[4]
+  def protocol
+    request['Protocol']
   end
 
-  def diagnostics(request)
-    ["Verb: #{verb(request)}", "Path: #{path(request)}",
-     "Protocol: #{protocol(request)}", "Host: #{host(request)}",
-     "Port: #{port(request)}", "Origin: #{host(request)}",
-     "#{accept(request)}"].join("\n")
+  def host
+    request['Host']
+  end
+
+  def port
+    request['Port']
+  end
+
+  def accept
+    request['Accept']
+  end
+
+  def diagnostics
+    ["Verb: #{verb}", "Path: #{path}",
+     "Protocol: #{protocol}", "Host: #{host}",
+     "Port: #{port}", "Origin: #{host}",
+     "Accept: #{accept}"].join("\n")
   end
 end
