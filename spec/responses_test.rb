@@ -4,6 +4,7 @@ require 'responses'
 class ResponsesTest < Minitest::Test
   def setup
     @responses = Responses.new
+    @game = Game.new
   end
 
   def test_generates_hello_world_response
@@ -58,32 +59,47 @@ class ResponsesTest < Minitest::Test
     assert_equal expected, @responses.word_search('jfesaiovewuoa')
   end
 
-  def test_game_responds_to_low_guess
+  def test_game_responds_to_low_guess_from_post_redirect
     expected = "Your guess was too low!\nNumber of Guesses: 1"
 
-    assert_equal expected, @responses.game(:too_low, 1)
+    @game.answer = 7
+    @game.store_guess(1)
+    assert_equal expected, @responses.game('post', @game)
   end
 
-  def test_game_responds_to_high_guess
+  def test_game_responds_to_high_guess_from_post_redirect
     expected = "Your guess was too high!\nNumber of Guesses: 1"
 
-    assert_equal expected, @responses.game(:too_high, 1)
+    @game.answer = 7
+    @game.store_guess(8)
+    assert_equal expected, @responses.game('post', @game)
   end
 
-  def test_game_responds_to_correct_guess
+  def test_game_responds_to_correct_guess_from_post_redirect
     expected = "Your guess was correct!\nNumber of Guesses: 1"
 
-    assert_equal expected, @responses.game(:correct, 1)
+    @game.answer = 7
+    @game.store_guess(7)
+    assert_equal expected, @responses.game('post', @game)
   end
 
-  def test_game_responds_to_no_guess
-    expected = "\nNumber of Guesses: 1"
+  def test_game_responds_to_no_guess_from_start_of_game
+    expected = "Good Luck!\nNumber of Guesses: 0"
 
-    assert_equal expected, @responses.game(nil, 1)
+    @game.answer = 7
+    assert_equal expected, @responses.game('post', @game)
   end
 
   def test_game_responds_with_number_of_guesses
-    expected = "Your guess was too low!\nNumber of Guesses: 7"
-    assert_equal expected, @responses.game(:too_low, 7)
+    expected1 = "Your guess was too low!\nNumber of Guesses: 1"
+
+    @game.answer = 7
+    @game.store_guess(6)
+    assert_equal expected1, @responses.game('post', @game)
+
+    expected2 = "Your guess was too high!\nNumber of Guesses: 2"
+
+    @game.store_guess(8)
+    assert_equal expected2, @responses.game('post', @game)
   end
 end

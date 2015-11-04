@@ -1,4 +1,5 @@
 require_relative 'html_generator'
+require_relative 'header_generator'
 require_relative 'request_parser'
 require_relative 'word_search'
 require_relative 'responses'
@@ -58,7 +59,6 @@ class App
   end
 
   def generate_headers(length)
-    # binding.pry
     @header_generator.headers(length, @status_code)
   end
 end
