@@ -14,6 +14,6 @@ class HeaderGenerator
   end
 
   def location_line
-    "location: http://127.0.0.1:9292/game"
+    "location: http://127.0.0.1:9292/game?word=post"
   end
 end

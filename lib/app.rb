@@ -48,7 +48,7 @@ class App
     when '/datetime'    then @responses.datetime
     when '/shutdown'    then @responses.shutdown(i)
     when '/word_search' then @responses.word_search(@parser.word)
-    when '/game'        then @responses.game(nil, @game.number_of_guesses)
+    when '/game'        then @responses.game(@parser.word, @game)
     # else                then @status_code = '404 NOT FOUND'
     end
   end

@@ -30,17 +30,20 @@ class Responses
     end
   end
 
-  def game(sym, num_guesses)
-    case sym
-    when :too_low
-      line = "Your guess was too low!"
-    when :correct
-      line = "Your guess was correct!"
-    when :too_high
-      line = "Your guess was too high!"
+  def game(post_redirect, game)
+    if post_redirect
+      case game.check_guess
+      when :too_low
+        line = "Your guess was too low!"
+      when :correct
+        line = "Your guess was correct!"
+      when :too_high
+        line = "Your guess was too high!"
+      end
     else
       line = ''
     end
-    line + "\n" + "Number of Guesses: #{num_guesses}"
+
+    line + "\n" + "Number of Guesses: #{game.number_of_guesses}"
   end
 end
