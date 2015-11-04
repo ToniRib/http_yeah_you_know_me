@@ -53,6 +53,9 @@ class App
     when '/shutdown'    then @responses.shutdown(i)
     when '/word_search' then @responses.word_search(@parser.word)
     when '/game'        then @responses.game(@parser.word, @game)
+    when '/force_error'
+      @status_code = '500 INTERNAL SERVER ERROR'
+      @responses.system_error
     else                     @status_code = '404 NOT FOUND'
     end
   end

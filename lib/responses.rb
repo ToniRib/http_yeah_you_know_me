@@ -34,6 +34,13 @@ class Responses
     'There is already a game in progress.'
   end
 
+  def system_error
+    fail SystemStackError, "500 INTERNAL SERVER ERROR", caller
+    rescue SystemStackError => e
+    stack = e.backtrace.join("\n")
+    "500 INTERNAL SERVER ERROR\n" + stack
+  end
+
   def game(post_redirect, game)
     if post_redirect
       case game.check_guess
