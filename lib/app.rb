@@ -23,7 +23,12 @@ class App
 
   def post_responses
     case @parser.path
-    when '/start_game' then @responses.good_luck
+    when '/start_game'
+      @responses.good_luck
+      #start game
+    when '/game'
+      # check guess
+      # output response
     end
   end
 
