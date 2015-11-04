@@ -31,7 +31,7 @@ class HeaderGeneratorTest < Minitest::Test
     expected = ["http/1.1 301 MOVED PERMANENTLY",
                "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
                "server: ruby",
-               "location: http://127.0.0.1:9292/game",
+               "location: http://127.0.0.1:9292/game?word=post",
                "content-type: text/html; charset=iso-8859-1",
                "content-length: 70\r\n\r\n"].join("\r\n")
 
