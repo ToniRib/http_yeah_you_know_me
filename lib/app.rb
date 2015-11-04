@@ -44,7 +44,7 @@ class App
     when '/shutdown'    then @responses.shutdown(i)
     when '/word_search' then @responses.word_search(@parser.word)
     when '/game'        then @responses.game(nil, @game.number_of_guesses)
-    else                then @status_code = '404 NOT FOUND'
+    # else                then @status_code = '404 NOT FOUND'
     end
   end
 
