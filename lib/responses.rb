@@ -30,6 +30,10 @@ class Responses
     end
   end
 
+  def game_in_progress
+    'There is already a game in progress.'
+  end
+
   def game(post_redirect, game)
     if post_redirect
       case game.check_guess
