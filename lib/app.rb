@@ -10,6 +10,7 @@ class App
     @html_generator = HtmlGenerator.new
     @responses = Responses.new
     @header_generator = HeaderGenerator.new
+    @status_code = '200 OK'
   end
 
   def generate_response(i, request)
@@ -26,6 +27,7 @@ class App
   def post_responses
     case @parser.path
     when '/start_game'
+      # does @game already exist? if yes -> some status code if no-> some other
       @game = Game.new
       @responses.good_luck
     when '/game'
@@ -42,10 +44,11 @@ class App
     when '/shutdown'    then @responses.shutdown(i)
     when '/word_search' then @responses.word_search(@parser.word)
     when '/game'        then @responses.game(nil, @game.number_of_guesses)
+    else                then @status_code = '404 NOT FOUND'
     end
   end
 
   def generate_headers(length)
-    @header_generator.headers(length, @parser.path, @parser.verb)
+    @header_generator.headers(length, @status_code)
   end
 end
