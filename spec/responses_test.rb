@@ -57,4 +57,33 @@ class ResponsesTest < Minitest::Test
 
     assert_equal expected, @responses.word_search('jfesaiovewuoa')
   end
+
+  def test_game_responds_to_low_guess
+    expected = "Your guess was too low!\nNumber of Guesses: 1"
+
+    assert_equal expected, @responses.game(:too_low, 1)
+  end
+
+  def test_game_responds_to_high_guess
+    expected = "Your guess was too high!\nNumber of Guesses: 1"
+
+    assert_equal expected, @responses.game(:too_high, 1)
+  end
+
+  def test_game_responds_to_correct_guess
+    expected = "Your guess was correct!\nNumber of Guesses: 1"
+
+    assert_equal expected, @responses.game(:correct, 1)
+  end
+
+  def test_game_responds_to_no_guess
+    expected = "\nNumber of Guesses: 1"
+
+    assert_equal expected, @responses.game(nil, 1)
+  end
+
+  def test_game_responds_with_number_of_guesses
+    expected = "Your guess was too low!\nNumber of Guesses: 7"
+    assert_equal expected, @responses.game(:too_low, 7)
+  end
 end
