@@ -59,7 +59,8 @@ class App
     when '/force_error'
       @status_code = '500 INTERNAL SERVER ERROR'
       @responses.system_error
-    else                     @status_code = '404 NOT FOUND'
+    else
+      @status_code = '404 NOT FOUND'
     end
   end
 
