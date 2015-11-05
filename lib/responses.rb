@@ -1,6 +1,10 @@
 require_relative 'word_search'
 
 class Responses
+  def initialize
+    @word_searcher = WordSearch.new
+  end
+
   def hello_world(i)
     "Hello, World (#{i})"
   end
@@ -23,7 +27,7 @@ class Responses
   end
 
   def word_search(word)
-    if WordSearch.new.word?(word)
+    if @word_searcher.word?(word)
       "#{word} is a known word"
     else
       "#{word} is not a known word"
@@ -31,13 +35,20 @@ class Responses
   end
 
   def word_suggest(word)
-    ws = WordSearch.new
-    suggestions = ws.suggest(word)
-    if ws.word?(word)
-      "{\"word\":\"#{word}\",\"is_word\":true}"
+    if @word_searcher.word?(word)
+      display_word(word)
     else
-      "{\"word\":\"#{word}\",\"is_word\":false,\"possible_matches\":#{suggestions}}"
+      display_suggestions(word)
     end
+  end
+
+  def display_word(word)
+    "{\"word\":\"#{word}\",\"is_word\":true}"
+  end
+
+  def display_suggestions(word)
+    suggestions = @word_searcher.suggest(word)
+    "{\"word\":\"#{word}\",\"is_word\":false,\"possible_matches\":#{suggestions}}"
   end
 
   def game_in_progress
@@ -49,7 +60,7 @@ class Responses
   end
 
   def system_error
-    fail SystemStackError, "500 INTERNAL SERVER ERROR", caller
+    fail SystemStackError, '500 INTERNAL SERVER ERROR', caller
     rescue SystemStackError => e
     stack = e.backtrace.join("\n")
     "500 INTERNAL SERVER ERROR\n" + stack
@@ -59,13 +70,13 @@ class Responses
     if post_redirect
       case game.check_guess
       when :too_low
-        line = "Your guess was too low!"
+        line = 'Your guess was too low!'
       when :correct
-        line = "Your guess was correct!"
+        line = 'Your guess was correct!'
       when :too_high
-        line = "Your guess was too high!"
+        line = 'Your guess was too high!'
       when :no_guesses
-        line = "Good Luck!"
+        line = 'Good Luck!'
       end
     else
       line = ''
