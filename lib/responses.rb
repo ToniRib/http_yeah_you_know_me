@@ -68,20 +68,20 @@ class Responses
 
   def game(post_redirect, game)
     if post_redirect
-      case game.check_guess
-      when :too_low
-        line = 'Your guess was too low!'
-      when :correct
-        line = 'Your guess was correct!'
-      when :too_high
-        line = 'Your guess was too high!'
-      when :no_guesses
-        line = 'Good Luck!'
-      end
+      line = respond_to_guess(game)
     else
       line = ''
     end
 
     line + "\n" + "Number of Guesses: #{game.number_of_guesses}"
+  end
+
+  def respond_to_guess(game)
+    case game.check_guess
+    when :too_low      then 'Your guess was too low!'
+    when :correct      then 'Your guess was correct!'
+    when :too_high     then 'Your guess was too high!'
+    when :no_guesses   then 'Good Luck!'
+    end
   end
 end
