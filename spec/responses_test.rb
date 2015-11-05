@@ -1,5 +1,6 @@
 require 'minitest'
 require 'responses'
+require 'game'
 
 class ResponsesTest < Minitest::Test
   def setup
@@ -101,5 +102,25 @@ class ResponsesTest < Minitest::Test
 
     @game.store_guess(8)
     assert_equal expected2, @responses.game('post', @game)
+  end
+
+  def test_game_response_with_game_already_in_progress
+    assert_equal 'There is already a game in progress.', @responses.game_in_progress
+  end
+
+  def test_game_response_with_no_game_started
+    assert_equal 'There is no game started yet. POST to start_game to begin.', @responses.no_game_started
+  end
+
+  def test_displays_json_for_valid_word
+    expected = "{\"word\":\"pizza\",\"is_word\":true}"
+
+    assert_equal expected, @responses.word_suggest('pizza')
+  end
+
+  def test_displays_json_suggestions_for_word_fragment
+    expected = "{\"word\":\"piz\",\"is_word\":false,\"possible_matches\":[\"pizzle\", \"pizzicato\", \"pizzeria\", \"pizza\", \"pize\"]}"
+
+    assert_equal expected, @responses.word_suggest('piz')
   end
 end
