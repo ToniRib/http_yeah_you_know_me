@@ -17,6 +17,10 @@ class Responses
     "Total Requests: #{i}"
   end
 
+  def invalid_guess
+    'Invalid Guess: Guess was not a number 1-10'
+  end
+
   def datetime
     # 11:07AM on Sunday, November 1, 2015
     Time.now.strftime('%l:%M%p on %A, %B %e, %Y')

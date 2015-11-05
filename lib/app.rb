@@ -33,7 +33,7 @@ class App
 
   def check_for_current_game
     if @game
-      store_guess_and_redirect
+      check_guess_validity
     else
       no_game_started
     end
@@ -47,10 +47,23 @@ class App
     end
   end
 
+  def check_guess_validity
+    if guess_is_valid
+      store_guess_and_redirect
+    else
+      @status_code = '403 FORBIDDEN'
+      @responses.invalid_guess
+    end
+  end
+
   def store_guess_and_redirect
     @game.store_guess(@parser.guess)
     @status_code = '301 MOVED PERMANENTLY'
     @responses.root
+  end
+
+  def guess_is_valid
+    @parser.guess != 0 && (1..10).to_a.include?(@parser.guess)
   end
 
   def refuse_new_game_start
