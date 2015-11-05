@@ -10,27 +10,31 @@ class ClientHandler
 
   def get_request
     @client = server.accept
+    request = []
 
-    request_lines = []
-    while line = client.gets and !line.chomp.empty?
-      request_lines << line.chomp
-    end
+    move_headers_into(request)
+    move_body_into(request) if content_is_set_on(request)
 
-    get_body_info(request_lines) if body_exists(request_lines)
-
-    request_lines
+    return request
   end
 
-  def body_exists(request_lines)
-    request_lines.join.include?('Content-Type')
+  def move_headers_into(request)
+    move_next_block_of_lines_into(request)
   end
 
-  def get_body_info(request_lines)
-    while line = client.gets and !line.chomp.empty?
-      request_lines << line.chomp
-    end
+  def move_body_into(request)
+    move_next_block_of_lines_into(request)
+    request << client.gets
+  end
 
-    request_lines << client.gets
+  def move_next_block_of_lines_into(request)
+    while line = client.gets and !line.chomp.empty?
+      request << line.chomp
+    end
+  end
+
+  def content_is_set_on(request)
+    request.join.include?('Content-Type')
   end
 
   def post_response(headers, response)

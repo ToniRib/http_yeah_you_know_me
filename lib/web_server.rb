@@ -11,7 +11,7 @@ loop do
 
   unless request.first.include?('favicon')
     response = app.generate_response(i, request)
-    headers = app.generate_headers(response.length)
+    headers  = app.generate_headers(response.length)
 
     client_handler.post_response(headers, response)
 
