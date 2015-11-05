@@ -44,6 +44,10 @@ class Responses
     'There is already a game in progress.'
   end
 
+  def no_game_started
+    'There is no game started yet. POST to start_game to begin.'
+  end
+
   def system_error
     fail SystemStackError, "500 INTERNAL SERVER ERROR", caller
     rescue SystemStackError => e

@@ -27,9 +27,18 @@ class App
   def post_responses
     case @parser.path
     when '/start_game'
-      check_game_progress
+      start_or_refuse_new_game
     when '/game'
+      check_for_current_game
+    end
+  end
+
+  def check_for_current_game
+    if @game
       store_guess_and_redirect
+    else
+      @status_code = '403 FORBIDDEN'
+      @responses.no_game_started
     end
   end
 
@@ -39,7 +48,7 @@ class App
     @responses.root
   end
 
-  def check_game_progress
+  def start_or_refuse_new_game
     if @game
       refuse_new_game_start
     else
