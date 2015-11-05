@@ -229,4 +229,63 @@ class AppTest < Minitest::Test
     assert_equal expected, @app.generate_response(0, get_game_request)
   end
 
+  def test_game_is_not_started_yet
+    get_game_request = ["GET /game HTTP/1.1",
+                         "Host: 127.0.0.1:9292",
+                         "Connection:keep-alive",
+                         "Cache-Control: max-age=0",
+                         "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                         "Upgrade-Insecure-Requests: 1",
+                         "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
+                         "Accept-Encoding: gzip, deflate, sdch",
+                         "Accept-Language: en-US,en;q=0.8"]
+
+    request_data = ["Verb: GET",
+                    "Path: /game",
+                    "Protocol: HTTP/1.1",
+                    "Host: 127.0.0.1",
+                    "Port: 9292",
+                    "Origin: 127.0.0.1",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
+
+    expected = "<html><head></head><body><pre>There is no game started yet. POST to start_game to begin.</pre><pre>#{request_data.join("\n")}</pre></body></html>"
+
+    assert_equal expected, @app.generate_response(0, get_game_request)
+  end
+
+  def test_game_is_already_in_progress
+    start_game_request = ["POST /start_game HTTP/1.1",
+                         "Host: 127.0.0.1:9292",
+                         "Connection:keep-alive",
+                         "Cache-Control: max-age=0",
+                         "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                         "Upgrade-Insecure-Requests: 1",
+                         "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
+                         "Accept-Encoding: gzip, deflate, sdch",
+                         "Accept-Language: en-US,en;q=0.8"]
+
+    @app.generate_response(0, start_game_request)
+
+    start_game_request2 = ["POST /start_game HTTP/1.1",
+                         "Host: 127.0.0.1:9292",
+                         "Connection:keep-alive",
+                         "Cache-Control: max-age=0",
+                         "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+                         "Upgrade-Insecure-Requests: 1",
+                         "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
+                         "Accept-Encoding: gzip, deflate, sdch",
+                         "Accept-Language: en-US,en;q=0.8"]
+
+    request_data = ["Verb: POST",
+                    "Path: /start_game",
+                    "Protocol: HTTP/1.1",
+                    "Host: 127.0.0.1",
+                    "Port: 9292",
+                    "Origin: 127.0.0.1",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"]
+
+    expected = "<html><head></head><body><pre>There is already a game in progress.</pre><pre>#{request_data.join("\n")}</pre></body></html>"
+
+    assert_equal expected, @app.generate_response(0, start_game_request2)
+  end
 end
