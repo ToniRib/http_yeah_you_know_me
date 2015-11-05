@@ -11,8 +11,12 @@ class RequestParser
   def build_hash(raw_request)
     parse_first_line(raw_request.shift)
     parse_host(raw_request.shift)
-    parse_body(raw_request.pop(3)) if raw_request.length > 9
+    parse_body(raw_request.pop(3)) if response_contains_body(raw_request)
     parse_headers(raw_request)
+  end
+
+  def response_contains_body(raw_request)
+    raw_request.length > 9
   end
 
   def parse_first_line(line)

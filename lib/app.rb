@@ -1,10 +1,8 @@
 require_relative 'html_generator'
 require_relative 'header_generator'
 require_relative 'request_parser'
-require_relative 'word_search'
 require_relative 'responses'
 require_relative 'game'
-require 'pry'
 
 class App
   def initialize

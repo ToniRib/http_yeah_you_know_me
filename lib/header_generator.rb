@@ -1,5 +1,3 @@
-require 'pry'
-
 class HeaderGenerator
   def headers(output_length, status_code)
     headers = ["http/1.1 #{status_code}",
