@@ -1,6 +1,5 @@
 require 'minitest'
 require 'app'
-require 'pry'
 
 class AppTest < Minitest::Test
   def setup
