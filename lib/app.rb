@@ -49,7 +49,12 @@ class App
     when '/hello'       then @responses.hello_world(i)
     when '/datetime'    then @responses.datetime
     when '/shutdown'    then @responses.shutdown(i)
-    when '/word_search' then @responses.word_search(@parser.word)
+    when '/word_search'
+      if @parser.accept.start_with?('application/json')
+        @responses.word_suggest(@parser.word)
+      else
+        @responses.word_search(@parser.word)
+      end
     when '/game'        then @responses.game(@parser.word, @game)
     when '/force_error'
       @status_code = '500 INTERNAL SERVER ERROR'

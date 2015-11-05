@@ -30,6 +30,16 @@ class Responses
     end
   end
 
+  def word_suggest(word)
+    ws = WordSearch.new
+    suggestions = ws.suggest(word)
+    if ws.word?(word)
+      "{\"word\":\"#{word}\",\"is_word\":true}"
+    else
+      "{\"word\":\"#{word}\",\"is_word\":false,\"possible_matches\":#{suggestions}}"
+    end
+  end
+
   def game_in_progress
     'There is already a game in progress.'
   end

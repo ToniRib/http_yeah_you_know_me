@@ -14,4 +14,8 @@ class WordSearch
       false
     end
   end
+
+  def suggest(word)
+    @complete_me.suggest(word)
+  end
 end
