@@ -43,7 +43,7 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0
 * __/shutdown__ - returns the total number of requests to the server and shuts down the server
 * __/force_error__ - returns a 500 Internal System Error status and a stack trace (simulates an error)
 
-A get to any other path will return a 404 Not Found status.
+A GET request to any other path will return a 404 Not Found status.
 
 ##### POST
 
