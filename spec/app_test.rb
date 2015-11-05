@@ -129,21 +129,6 @@ class AppTest < Minitest::Test
     assert_equal expected, @app.generate_response(0, request)
   end
 
-  def test_cannot_post_to_hello_path
-    skip #deal when handling errors
-    request = ["POST /hello HTTP/1.1",
-               "Host: 127.0.0.1:9292",
-               "Connection:keep-alive",
-               "Cache-Control: max-age=0",
-               "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-               "Upgrade-Insecure-Requests: 1",
-               "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
-               "Accept-Encoding: gzip, deflate, sdch",
-               "Accept-Language: en-US,en;q=0.8"]
-    # binding.pry
-    refute @app.generate_response(0, request)
-  end
-
   def test_returns_good_luck_when_game_is_started
     request = ["POST /start_game HTTP/1.1",
                "Host: 127.0.0.1:9292",

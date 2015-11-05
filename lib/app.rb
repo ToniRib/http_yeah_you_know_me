@@ -26,10 +26,8 @@ class App
 
   def post_responses
     case @parser.path
-    when '/start_game'
-      start_or_refuse_new_game
-    when '/game'
-      check_for_current_game
+    when '/start_game' then start_or_refuse_new_game
+    when '/game'       then check_for_current_game
     end
   end
 
