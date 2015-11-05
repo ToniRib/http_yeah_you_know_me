@@ -1,5 +1,3 @@
-require 'pry'
-
 class RequestParser
   attr_reader :request
 
