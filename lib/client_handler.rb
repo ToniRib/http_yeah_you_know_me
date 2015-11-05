@@ -1,6 +1,5 @@
 require 'socket'
 require_relative 'app'
-require 'pry'
 
 class ClientHandler
   attr_reader :server, :client
