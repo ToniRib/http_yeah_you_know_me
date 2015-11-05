@@ -50,10 +50,17 @@ class RequestParserTest < Minitest::Test
   end
 
   def test_recognizes_a_different_word
-    skip
-    request = ["POST /word_search?word=hello HTTP/2.0"]
+    request = ["POST /word_search?word=hello HTTP/2.0",
+               "Host: 127.0.55.1:2323",
+               "Connection: keep-alive",
+               "Accept: application/json,text/html,application/xhtml+xml,application/xml;q=0.9",
+               "Upgrade-Insecure-Requests: 1",
+               "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36",
+               "Accept-Encoding: gzip, deflate, sdch",
+               "Accept-Language: en-US,en;q=0.8"]
+    parser = RequestParser.new(request)
 
-    assert_equal 'hello', @parser2.word(request)
+    assert_equal 'hello', parser.word
   end
 
   def test_recognizes_a_protocol
