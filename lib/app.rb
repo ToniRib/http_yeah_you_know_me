@@ -37,15 +37,8 @@ class App
     if @game
       store_guess_and_redirect
     else
-      @status_code = '403 FORBIDDEN'
-      @responses.no_game_started
+      no_game_started
     end
-  end
-
-  def store_guess_and_redirect
-    @game.store_guess(@parser.guess)
-    @status_code = '301 MOVED PERMANENTLY'
-    @responses.root
   end
 
   def start_or_refuse_new_game
@@ -56,9 +49,20 @@ class App
     end
   end
 
+  def store_guess_and_redirect
+    @game.store_guess(@parser.guess)
+    @status_code = '301 MOVED PERMANENTLY'
+    @responses.root
+  end
+
   def refuse_new_game_start
     @status_code = '403 FORBIDDEN'
     @responses.game_in_progress
+  end
+
+  def no_game_started
+    @status_code = '403 FORBIDDEN'
+    @responses.no_game_started
   end
 
   def start_new_game_and_redirect
@@ -74,9 +78,17 @@ class App
     when '/datetime'    then @responses.datetime
     when '/shutdown'    then @responses.shutdown(i)
     when '/word_search' then check_for_json_request
-    when '/game'        then @responses.game(@parser.word, @game)
+    when '/game'        then get_game_status_for_current_game
     when '/force_error' then force_error_status_and_response
     else                     @status_code = '404 NOT FOUND'
+    end
+  end
+
+  def get_game_status_for_current_game
+    if @game
+      @responses.game(@parser.word, @game)
+    else
+      no_game_started
     end
   end
 
