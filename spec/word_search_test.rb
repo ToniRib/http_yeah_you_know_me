@@ -3,7 +3,7 @@ require 'word_search'
 
 class WordSearchTest < Minitest::Test
   def setup
-    @word_search = WordSearch.new
+    @word_search ||= WordSearch.new
   end
 
   def test_pizza_is_a_word

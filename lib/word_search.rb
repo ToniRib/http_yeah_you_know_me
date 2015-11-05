@@ -2,8 +2,8 @@ require_relative 'complete_me'
 
 class WordSearch
   def initialize
-    @complete_me = CompleteMe.new
-    dictionary = ['pizza']
+    @complete_me ||= CompleteMe.new
+    dictionary = File.read("/usr/share/dict/words")
     @complete_me.populate(dictionary)
   end
 

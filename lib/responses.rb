@@ -1,10 +1,6 @@
 require_relative 'word_search'
 
 class Responses
-  def initialize
-    @word_searcher = WordSearch.new
-  end
-
   def hello_world(i)
     "Hello, World (#{i})"
   end
@@ -27,6 +23,7 @@ class Responses
   end
 
   def word_search(word)
+    @word_searcher ||= WordSearch.new
     if @word_searcher.word?(word)
       "#{word} is a known word"
     else
@@ -35,6 +32,7 @@ class Responses
   end
 
   def word_suggest(word)
+    @word_searcher ||= WordSearch.new
     if @word_searcher.word?(word)
       display_word(word)
     else
