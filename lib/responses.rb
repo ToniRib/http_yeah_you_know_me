@@ -18,7 +18,7 @@ class Responses
   end
 
   def invalid_guess
-    'Invalid Guess: Guess was not a number 1-10'
+    'Invalid Guess: Guess must be a number in the range 1 - 10'
   end
 
   def datetime
