@@ -77,3 +77,5 @@ You can also run all the tests at the same time by running the `mrspec` command 
 Must have the [mrspec gem](https://github.com/JoshCheek/mrspec) and [minitest gem](https://github.com/seattlerb/minitest) installed.
 
 Using the POST request for this project requires [Google Chrome extension Postman](https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?hl=en).
+
+New stuff that I've added on this branch!
